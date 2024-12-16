@@ -21,14 +21,14 @@ export default function DashboardPage() {
   return (
     <div>
       <h1 className="hidden">{title.homeTitle}</h1>
-      <div className="mb-8">
+      <div className="mb-8 min-h-[150px]">
         <WeatherContainer city="Copenhagen" weather={weather} apiKey={apiKey} />
       </div>
-      <div className="mb-8">
+      <div className="mb-8 min-h-[200px]">
         <TipsSlider mainTitle={tips.mainTitle} tips={tips.tips} />
       </div>
 
-      <div className="mb-8">
+      <div className="mb-8 min-h-[300px]">
         <FAQ mainTitle={faq.mainTitle} questions={faq.questions} />
       </div>
     </div>
