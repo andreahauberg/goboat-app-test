@@ -1,5 +1,4 @@
 "use client";
-import { useEffect } from "react";
 import dynamic from "next/dynamic";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
@@ -14,8 +13,6 @@ import { LocationProvider } from "@/app/lib/context/LocationContext";
 import { FooterVisibilityProvider } from "./lib/context/FooterVisibility";
 import { useFooterVisibility } from "./lib/context/FooterVisibility";
 import AppMessage from "./components/message/AppMessage";
-import { useRouter } from "next/navigation";
-import { getOnboardingStatus } from "@/app/lib/data/storage";
 import metaData from "./lib/content/metaData";
 
 const NoSSRHeader = dynamic(() => import("@/app/components/basics/Header"), {
@@ -28,24 +25,8 @@ const NoSSRFooter = dynamic(() => import("@/app/components/basics/Footer"), {
 function Content({ children }) {
   const { language } = useLanguage();
   const { isFooterVisible } = useFooterVisibility();
-  const router = useRouter();
 
   const { title, description } = metaData[language] || metaData["en"];
-
-  useEffect(() => {
-    const hasCompletedOnboarding = getOnboardingStatus();
-    const hasShownOnboarding = localStorage.getItem("onboardingShown");
-    const currentPath = window.location.pathname;
-
-    if (!hasShownOnboarding) {
-      localStorage.setItem("onboardingShown", "true");
-      if (currentPath !== "/onboarding") {
-        router.push("/onboarding");
-      }
-    } else if (hasCompletedOnboarding && currentPath === "/onboarding") {
-      router.push("/");
-    }
-  }, [router]);
 
   return (
     <>
